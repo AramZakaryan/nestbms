@@ -1,13 +1,13 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity()
-export class Author {
+export class Book {
   @PrimaryGeneratedColumn()
   id: number
   @Column()
-  name: string
+  title: string
   @Column()
-  biography: string
+  isbn: string
   @Column()
-  date_of_birth: Date
+  author_id: number
 }
