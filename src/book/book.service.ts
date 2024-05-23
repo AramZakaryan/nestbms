@@ -51,7 +51,18 @@ export class BookService {
     const existBook = await this.bookRepository.findOneBy({ id })
     if (!existBook) throw new BadRequestException('the book does not exist')
 
-    return await this.bookRepository.update(id, updateBookDto)
+    return await this.bookRepository
+      .update(id, {
+        title: updateBookDto.title,
+        isbn: updateBookDto.isbn,
+        author_id: updateBookDto.author_id,
+      })
+      .catch(
+        () =>
+          new BadRequestException(
+            'something went wrong, contact the system administrator',
+          ),
+      )
   }
 
   async remove(id: number) {
