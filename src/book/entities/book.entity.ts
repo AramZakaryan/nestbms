@@ -1,4 +1,15 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import {
+  Column,
+  Entity,
+  getRepository,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm'
+import { Author } from '../../author/entities/author.entity'
+import { ValidateIf, ValidateNested } from 'class-validator'
+import { getRepositoryToken } from '@nestjs/typeorm'
 
 @Entity()
 export class Book {
@@ -10,4 +21,7 @@ export class Book {
   isbn: string
   @Column()
   author_id: number
+  @ManyToOne(() => Author, (author) => author.book, { eager: true })
+  @JoinColumn({ name: 'author_id' })
+  author: Author
 }

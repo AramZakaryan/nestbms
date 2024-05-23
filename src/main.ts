@@ -10,10 +10,10 @@ async function bootstrap() {
     .setDescription('The Book Management System API')
     .setVersion('1.0')
     .addTag('bms')
-    .setExternalDoc('Postman Collection', '/api-json')
+    .setExternalDoc('Postman Collection', '/docs-json')
     .build()
   const document = SwaggerModule.createDocument(app, config)
-  SwaggerModule.setup('api', app, document)
+  SwaggerModule.setup('docs', app, document)
 
   await app.listen(3000)
 }

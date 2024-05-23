@@ -6,6 +6,8 @@ import {
   Patch,
   Param,
   Delete,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common'
 import { AuthorService } from './author.service'
 import { CreateAuthorDto } from './dto/create-author.dto'
@@ -16,6 +18,7 @@ export class AuthorController {
   constructor(private readonly authorService: AuthorService) {}
 
   @Post()
+  @UsePipes(new ValidationPipe())
   create(@Body() createAuthorDto: CreateAuthorDto) {
     return this.authorService.create(createAuthorDto)
   }
@@ -31,6 +34,7 @@ export class AuthorController {
   }
 
   @Patch(':id')
+  @UsePipes(new ValidationPipe())
   update(@Param('id') id: string, @Body() updateAuthorDto: UpdateAuthorDto) {
     return this.authorService.update(+id, updateAuthorDto)
   }

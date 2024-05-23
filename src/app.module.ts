@@ -9,7 +9,6 @@ import { Book } from './book/entities/book.entity'
 
 @Module({
   imports: [
-    AuthorModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -20,6 +19,7 @@ import { Book } from './book/entities/book.entity'
       entities: [Author, Book],
       synchronize: true,
     }),
+    AuthorModule,
     BookModule,
   ],
   controllers: [AppController],

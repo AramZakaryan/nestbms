@@ -1,4 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm'
+import { Book } from '../../book/entities/book.entity'
 
 @Entity()
 export class Author {
@@ -10,4 +18,6 @@ export class Author {
   biography: string
   @Column()
   date_of_birth: Date
+  @OneToMany(() => Book, (book) => book.author, { onDelete: 'CASCADE' })
+  book: Book[]
 }
