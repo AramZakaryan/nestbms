@@ -142,6 +142,7 @@ describe('BookController', () => {
 
       const result = await controller.update('1', updateBookDto)
       expect(result).toEqual({ affected: 1 } as UpdateResult)
+
       expect(service.update).toHaveBeenCalledWith(1, updateBookDto)
     })
   })
