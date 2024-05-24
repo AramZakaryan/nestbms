@@ -4,6 +4,7 @@ import { UpdateAuthorDto } from './dto/update-author.dto'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { Author } from './entities/author.entity'
+import { BookService } from '../book/book.service'
 
 @Injectable()
 export class AuthorService {
@@ -60,7 +61,18 @@ export class AuthorService {
       )
   }
 
+  // err.driverError.errno == 1451
   async remove(id: number) {
-    return await this.authorRepository.delete(id)
+    return await this.authorRepository.delete(id).catch((err) => {
+      if (err.driverError.errno == 1451) {
+        throw new BadRequestException(
+          'all the books of the author should be deleted before delete the author',
+        )
+      } else {
+        throw new BadRequestException(
+          'something went wrong, contact the system administrator',
+        )
+      }
+    })
   }
 }

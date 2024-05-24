@@ -1,20 +1,16 @@
-import {
-  BadRequestException,
-  HttpException,
-  HttpStatus,
-  Injectable,
-} from '@nestjs/common'
+import { BadRequestException, Injectable } from '@nestjs/common'
 import { CreateBookDto } from './dto/create-book.dto'
 import { UpdateBookDto } from './dto/update-book.dto'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Book } from './entities/book.entity'
 import { Repository } from 'typeorm'
-import { Author } from '../author/entities/author.entity'
+import { AuthorService } from '../author/author.service'
 
 @Injectable()
 export class BookService {
   constructor(
     @InjectRepository(Book) private readonly bookRepository: Repository<Book>,
+    private readonly authorService: AuthorService,
   ) {}
 
   async create(createBookDto: CreateBookDto) {
@@ -23,6 +19,12 @@ export class BookService {
       title: createBookDto.title,
     })
     if (existBook) throw new BadRequestException('the book already exists')
+
+    // Check if author exists
+    const existAuthor = await this.authorService.findOne(
+      createBookDto.author_id,
+    )
+    if (!existAuthor) throw new BadRequestException('the author does not exist')
 
     return await this.bookRepository
       .save({
