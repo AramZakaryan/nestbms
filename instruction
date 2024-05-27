@@ -1,0 +1,47 @@
+Project installation instruction
+
+1. Prerequisites:
+You should have on your machine MySQL, Node.js and yarn.
+2. Clone the repository:
+First, you need to clone the repository from GitHub to your local machine.
+Open a terminal or command prompt,
+navigate to the directory where you want to place the project,
+and run the following command:
+git clone git@github.com:AramZakaryan/nestbms.git
+3. Install dependencies:
+Once the repository is cloned, navigate into the project directory:
+cd <project-directory>
+4. Then, install the project dependencies using yarn:
+yarn install
+5. Database: Restore database from file
+nestbms/src/sqldump/Dump20240524.sql
+with some data or you can create a new database from scratch with name “bms”.
+6. Set up the environment: Go through the content of
+nest/.env
+file and make sure that database configuration variables
+(particularly that mySQL on your machine is running on the port 3306)
+and make appropriate changes.
+7. Project run: to run the project use command:
+yarn start:dev
+8. API: Use following path for api
+http://localhost:3000/api
+9. Documentation: Use following path for Swagger documentations
+http://localhost:3000/docs
+10. Postman: Import Postman collection using following path
+http://localhost:3000/docs-json
+or you can use file
+nestbms/src/sqldump/postmanCollection/BMS API.postman_collection.json
+Please make sure that postman collection variables are correct.
+11. Authorisation: Postman collection already contains Bearer token for 30 day.
+It should not be any problem of authorisation, but if it arrives:
+    a. Please create a user in postman collection
+    api/user/User Controller create
+    body should be something like this
+        {
+            "email": "stringstring@string.st",
+            "password": "abcdefghi"
+        }
+    b. Use the same body (raw json) to login
+    api/auth/login
+    c. Take access_token from the login response and use it in postman collection
+    Authorisation (Bearer token)
